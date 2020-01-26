@@ -1,5 +1,5 @@
 {
   "recipes" : {
-    "purging": "allm.recipes.MysticSmeltingRecipeSerializer"
+    "mystic_smelting": "allm.recipes.MysticSmeltingRecipeSerializer"
   }
 }
