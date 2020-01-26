@@ -34,6 +34,9 @@ public class MysticSmeltingRecipeSerializer<T extends AbstractMysticSmeltingReci
         JsonElement jsonelement = (JsonElement)(JSONUtils.isJsonArray(json, "ingredient") ? JSONUtils.getJsonArray(json, "ingredient") : JSONUtils.getJsonObject(json, "ingredient"));
         Ingredient ingredient = Ingredient.deserialize(jsonelement);
 
+        JsonElement jsonelement1 = (JsonElement)(JSONUtils.isJsonArray(json, "modifier") ? JSONUtils.getJsonArray(json, "modifier") : JSONUtils.getJsonObject(json, "modifier"));
+        Ingredient modifier = Ingredient.deserialize(jsonelement1);
+
         //Forge: Check if primitive string to keep vanilla or a object which can contain a count field.
         if (!json.has("result")) throw new com.google.gson.JsonSyntaxException("Missing result, expected to find a string or object");
 
@@ -46,7 +49,7 @@ public class MysticSmeltingRecipeSerializer<T extends AbstractMysticSmeltingReci
         //get the process time
         int i = JSONUtils.getInt(json, "processtime", this.processTime);
 
-        return this.IAbstractVORecipeFactory.create(recipeId, s, ingredient, itemstack, f, i);
+        return this.IAbstractVORecipeFactory.create(recipeId, s, ingredient, modifier, itemstack, f, i);
     }
 
 
@@ -55,11 +58,12 @@ public class MysticSmeltingRecipeSerializer<T extends AbstractMysticSmeltingReci
 
         String s = buffer.readString(32767);
         Ingredient ingredient = Ingredient.read(buffer);
+        Ingredient modifier = Ingredient.read(buffer);
         ItemStack itemstack = buffer.readItemStack();
         float f = buffer.readFloat();
         int i = buffer.readVarInt();
 
-        return this.IAbstractVORecipeFactory.create(recipeId, s, ingredient, itemstack, f, i);
+        return this.IAbstractVORecipeFactory.create(recipeId, s, ingredient, modifier, itemstack, f, i);
     }
 
 
@@ -68,6 +72,7 @@ public class MysticSmeltingRecipeSerializer<T extends AbstractMysticSmeltingReci
 
         buffer.writeString(recipe.group);
         recipe.ingredient.write(buffer);
+        recipe.modifier.write(buffer);
         buffer.writeItemStack(recipe.result);
         buffer.writeFloat(recipe.experience);
         buffer.writeVarInt(recipe.processTime);
@@ -76,7 +81,7 @@ public class MysticSmeltingRecipeSerializer<T extends AbstractMysticSmeltingReci
 
     public interface IFactory<T extends AbstractMysticSmeltingRecipe> {
 
-        T create(ResourceLocation resourceLocation, String s, Ingredient ingredient, ItemStack itemStack, float experienceIn, int processTimeIn);
+        T create(ResourceLocation resourceLocation, String s, Ingredient ingredient, Ingredient modifier, ItemStack itemStack, float experienceIn, int processTimeIn);
     }
 
 }

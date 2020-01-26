@@ -1,8 +1,6 @@
 package com.jacktheminecraftmodder.allm;
 
-import com.jacktheminecraftmodder.allm.content.Blocks.BioGen;
-import com.jacktheminecraftmodder.allm.content.Blocks.ElectricAlloyFurnace;
-import com.jacktheminecraftmodder.allm.content.Blocks.MysticFurnace;
+import com.jacktheminecraftmodder.allm.content.Blocks.*;
 import com.jacktheminecraftmodder.allm.content.Enchantments.FlowerPower;
 import com.jacktheminecraftmodder.allm.content.Tileentities.BioGenTileEntity;
 import com.jacktheminecraftmodder.allm.content.Tileentities.ElectricAlloyFurnaceTile;
@@ -12,6 +10,8 @@ import com.jacktheminecraftmodder.allm.content.containers.ElectricAlloyFurnaceCo
 import com.jacktheminecraftmodder.allm.content.containers.MysticFurnaceContainer;
 import com.jacktheminecraftmodder.allm.setup.ModSetup;
 import net.minecraft.block.Block;
+import net.minecraft.block.LeavesBlock;
+import net.minecraft.block.LogBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -19,6 +19,7 @@ import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.world.gen.feature.Feature;
 import net.minecraftforge.common.extensions.IForgeContainerType;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -31,6 +32,7 @@ public class Register {
     public static final DeferredRegister<Item> ITEMS = new DeferredRegister<>(ForgeRegistries.ITEMS, Reference.MOD_ID);
     public static final DeferredRegister<TileEntityType<?>> TILE_ENTITY_TYPES = new DeferredRegister<>(ForgeRegistries.TILE_ENTITIES, Reference.MOD_ID);
     public static final DeferredRegister<Enchantment> ENCH = new DeferredRegister<>(ForgeRegistries.ENCHANTMENTS, Reference.MOD_ID);
+ //   public static final DeferredRegister<Feature<?>> FEATURE = new DeferredRegister<>(ForgeRegistries.FEATURES, Reference.MOD_ID);
    // public static final DeferredRegister<IRecipeSerializer<?>> RECIPIES = new DeferredRegister<>(ForgeRegistries.RECIPE_SERIALIZERS, Reference.MID);
    // public static final DeferredRegister<Potion> POTION = new DeferredRegister<>(ForgeRegistries.POTIONS, Reference.MID);
    // public static final DeferredRegister<Effect> POTION_TYPES = new DeferredRegister<>(ForgeRegistries.POTION_TYPES, Reference.MID);
@@ -41,13 +43,14 @@ public class Register {
         TILE_ENTITY_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
         CONTAINER_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
         ENCH.register(FMLJavaModLoadingContext.get().getModEventBus());
+      //  FEATURE.register(FMLJavaModLoadingContext.get().getModEventBus());
      //   ENTITIES.register(FMLJavaModLoadingContext.get().getModEventBus());
       //  DIMENSIONS.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
 
-    //Recipes
+    //Features
 
-   // public static final RegistryObject<IRecipeSerializer<AbstractMysticSmeltingRecipe>> MYSTIC_SMELTING_RECIPE = RECIPIES.register("mystic_smelting", () -> new MysticSmeltingRecipeSerializer(MysticFurnaceRecipe::new, 100));
+  //  public static final RegistryObject<Feature<MysticalTreeFeature>> MYSTICAL_TREE_FEATURE = FEATURE.register("mystical_tree_feature", () -> new MysticalTreeFeature());
 
     //Enchantments
 
@@ -59,6 +62,10 @@ public class Register {
     public static final RegistryObject<Block> ELECTRIC_ALLOY_FURNACE = BLOCKS.register("electric_alloy_furnace", () -> new ElectricAlloyFurnace(Block.Properties.create(Material.IRON).hardnessAndResistance(8.0f, 100.0f).lightValue(14)));
     public static final RegistryObject<Block> MYSTIC_FURNACE = BLOCKS.register("mystic_furnace", () -> new MysticFurnace());
     public static final RegistryObject<Block> TEST_BLOCK = BLOCKS.register("test_block", () -> new Block(Block.Properties.create(Material.ROCK)));
+   // public static final RegistryObject<Block> MYSTIC_CRAFTING_TABLE = BLOCKS.register("mystic_crafting", () -> new MysticCraftingTable());
+  //  public static final RegistryObject<Block> MYSTIC_LEAVES = BLOCKS.register("mystic_leaves", () -> new LeavesBlock(Block.Properties.create(Material.LEAVES)));
+   // public static final RegistryObject<Block> MYSTIC_LOG = BLOCKS.register("mystic_log", () -> new LogBlock(Block.Properties.create(Material.WOOD)));
+   // public static final RegistryObject<Block> MYSTIC_TREE_SAPLING = BLOCKS.register("mystic_tree_sapling", () -> new ModSaplingBlock(MysticalTree.class, Block.Properties.create(Material.ROCK)));
 
     //Containers
 

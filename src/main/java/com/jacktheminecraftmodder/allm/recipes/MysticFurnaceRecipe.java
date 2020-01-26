@@ -11,9 +11,9 @@ import net.minecraft.util.ResourceLocation;
 public class MysticFurnaceRecipe extends AbstractMysticSmeltingRecipe {
 
 
-    public MysticFurnaceRecipe(ResourceLocation idIn, String groupIn, Ingredient ingredientIn,
+    public MysticFurnaceRecipe(ResourceLocation idIn, String groupIn, Ingredient ingredientIn, Ingredient modifierIn,
                                ItemStack resultIn, float experienceIn, int processTimeIn) {
-        super(mystic_smelting , idIn, groupIn, ingredientIn, resultIn, experienceIn, processTimeIn);
+        super(mystic_smelting , idIn, groupIn, ingredientIn, modifierIn, resultIn, experienceIn, processTimeIn);
     }
 
     public static final IRecipeType<MysticFurnaceRecipe> mystic_smelting = IRecipeType.register("mystic_smelting");

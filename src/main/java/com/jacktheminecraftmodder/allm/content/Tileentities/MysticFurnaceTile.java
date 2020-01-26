@@ -58,8 +58,7 @@ public class MysticFurnaceTile extends TileEntity implements ITickableTileEntity
         public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
             switch (slot) {
                 case MODIFIER_SLOT:
-                   return stack.getItem() == Items.ACACIA_SIGN;
-                    //return stack.getItem() == Register.TEST_ITEM.get();
+                    return isModifier(stack);
                 case INPUT_SLOT:
                     return isInput(stack);
                 case OUTPUT_SLOT:
@@ -97,7 +96,7 @@ public class MysticFurnaceTile extends TileEntity implements ITickableTileEntity
     private boolean isModifier(final ItemStack stack) {
         if (stack.isEmpty())
             return false;
-        return Register.TEST_BLOCK.isPresent();
+        return getRecipe(stack).isPresent();
     }
 
     /*
@@ -130,8 +129,6 @@ public class MysticFurnaceTile extends TileEntity implements ITickableTileEntity
     }
 
     private Optional<ItemStack> getResult(final ItemStack input) {
-        // Due to vanilla's code we need to pass an IInventory into RecipeManager#getRecipe and
-        // AbstractCookingRecipe#getCraftingResult() so we make one here.
         final Inventory inventory = new Inventory(input);
         return getRecipe(inventory).map(recipe -> recipe.getCraftingResult(inventory));
     }
@@ -313,4 +310,5 @@ public class MysticFurnaceTile extends TileEntity implements ITickableTileEntity
     public Container createMenu(final int windowId, final PlayerInventory inventory, final PlayerEntity player) {
         return new MysticFurnaceContainer(windowId, inventory, this);
     }
+
 }

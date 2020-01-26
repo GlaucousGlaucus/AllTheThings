@@ -38,7 +38,7 @@ public class MysticFurnaceScreen extends ContainerScreen<MysticFurnaceContainer>
         }
 
 
-        boolean arrowHovered = relMouseX > 79 && relMouseX < 104 && relMouseY > 34 && relMouseY < 50;
+        boolean arrowHovered = relMouseX > 72 && relMouseX < 97 && relMouseY > 30 && relMouseY < 47;
         if (arrowHovered && tileEntity.maxSmeltTime > 0) {
             String tooltip = new TranslationTextComponent(
                     "gui." + Reference.MOD_ID + ".smeltTimeProgress",
@@ -52,7 +52,6 @@ public class MysticFurnaceScreen extends ContainerScreen<MysticFurnaceContainer>
     @Override
     protected void drawGuiContainerForegroundLayer(final int mouseX, final int mouseY) {
         super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-        // Copied from AbstractFurnaceScreen#drawGuiContainerForegroundLayer
         String s = this.title.getFormattedText();
         this.font.drawString(s, (float) (this.xSize / 2 - this.font.getStringWidth(s) / 2), 6.0F, 0x404040);
         this.font.drawString(this.playerInventory.getDisplayName().getFormattedText(), 8.0F, (float) (this.ySize - 96 + 2), 0x404040);
@@ -83,11 +82,7 @@ public class MysticFurnaceScreen extends ContainerScreen<MysticFurnaceContainer>
         if (tileEntity.smeltTimeLeft > 0) {
             // Draw progress arrow
             int arrowWidth = getSmeltTimeScaled();
-            this.blit(
-                    startX + 79, startY + 34,
-                    176, 14,
-                    arrowWidth, 16
-            );
+            this.blit(startX + 72, startY + 30, 176, 14, arrowWidth, 16);
         }
     }
 
@@ -106,7 +101,7 @@ public class MysticFurnaceScreen extends ContainerScreen<MysticFurnaceContainer>
         final short maxSmeltTime = tileEntity.maxSmeltTime;
         if (smeltTimeLeft <= 0 || maxSmeltTime <= 0)
             return 0;
-        return (maxSmeltTime - smeltTimeLeft) * 24 / maxSmeltTime; // 24 is the width of the arrow
+        return (maxSmeltTime - smeltTimeLeft) * 24 / maxSmeltTime;
     }
 
 }

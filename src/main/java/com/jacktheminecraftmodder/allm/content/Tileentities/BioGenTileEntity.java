@@ -89,7 +89,7 @@ public class BioGenTileEntity extends TileEntity implements ITickableTileEntity,
         int itemEnergy = 0;
 
         final ItemStack fuelStack = this.inventory.getStackInSlot(FUEL_SLOT);
-        if (!fuelStack.isEmpty()) {
+        if (!fuelStack.isEmpty() && energy.getEnergyStored() != 100_000) {
 
             if (fuelStack.getItem() == Items.POPPY) {
                 itemEnergy += 100;
@@ -106,7 +106,7 @@ public class BioGenTileEntity extends TileEntity implements ITickableTileEntity,
 
         for (final BlockPos blockPos : BlockPos.getAllInBoxMutable(pos.add(-5, -5, -5), pos.add(5, 5, 5))) {
             final BlockState blockState = world.getBlockState(blockPos);
-            final IFluidState fluidState = world.getFluidState(blockPos);
+            // final IFluidState fluidState = world.getFluidState(blockPos);
 
             int blockMysticEnergy = 0;
 
