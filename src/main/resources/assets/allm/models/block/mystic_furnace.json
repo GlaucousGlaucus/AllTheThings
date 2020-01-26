@@ -1,0 +1,6 @@
+{
+  "parent": "block/black_concrete",
+  "textures": {
+    "front": "allm:block/mystic_furnace_front"
+  }
+}
