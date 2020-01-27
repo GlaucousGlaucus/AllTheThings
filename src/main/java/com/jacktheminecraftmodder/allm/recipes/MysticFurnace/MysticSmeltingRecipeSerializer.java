@@ -1,4 +1,4 @@
-package com.jacktheminecraftmodder.allm.recipes;
+package com.jacktheminecraftmodder.allm.recipes.MysticFurnace;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -13,13 +13,13 @@ import net.minecraft.util.ResourceLocation;
 
 public class MysticSmeltingRecipeSerializer<T extends AbstractMysticSmeltingRecipe> extends net.minecraftforge.registries.ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<T> {
 
-    private final int processTime;
-    private final MysticSmeltingRecipeSerializer.IFactory<T> IAbstractVORecipeFactory;
+    private final int conversionTime;
+    private final MysticSmeltingRecipeSerializer.IFactory<T> factory;
 
 
     public MysticSmeltingRecipeSerializer(MysticSmeltingRecipeSerializer.IFactory<T> factoryIn, int processTimeIn) {
-        this.processTime = processTimeIn;
-        this.IAbstractVORecipeFactory = factoryIn;
+        this.conversionTime = processTimeIn;
+        this.factory = factoryIn;
         this.setRegistryName(Reference.MOD_ID, "mystic_smelting");
     }
 
@@ -47,9 +47,9 @@ public class MysticSmeltingRecipeSerializer<T extends AbstractMysticSmeltingReci
         float f = JSONUtils.getFloat(json, "experience", 0.0F);
 
         //get the process time
-        int i = JSONUtils.getInt(json, "processtime", this.processTime);
+        int i = JSONUtils.getInt(json, "processtime", this.conversionTime);
 
-        return this.IAbstractVORecipeFactory.create(recipeId, s, ingredient, modifier, itemstack, f, i);
+        return this.factory.create(recipeId, s, ingredient, modifier, itemstack, f, i);
     }
 
 
@@ -63,7 +63,7 @@ public class MysticSmeltingRecipeSerializer<T extends AbstractMysticSmeltingReci
         float f = buffer.readFloat();
         int i = buffer.readVarInt();
 
-        return this.IAbstractVORecipeFactory.create(recipeId, s, ingredient, modifier, itemstack, f, i);
+        return this.factory.create(recipeId, s, ingredient, modifier, itemstack, f, i);
     }
 
 
@@ -75,7 +75,7 @@ public class MysticSmeltingRecipeSerializer<T extends AbstractMysticSmeltingReci
         recipe.modifier.write(buffer);
         buffer.writeItemStack(recipe.result);
         buffer.writeFloat(recipe.experience);
-        buffer.writeVarInt(recipe.processTime);
+        buffer.writeVarInt(recipe.cookTime);
     }
 
 
@@ -83,5 +83,6 @@ public class MysticSmeltingRecipeSerializer<T extends AbstractMysticSmeltingReci
 
         T create(ResourceLocation resourceLocation, String s, Ingredient ingredient, Ingredient modifier, ItemStack itemStack, float experienceIn, int processTimeIn);
     }
+
 
 }

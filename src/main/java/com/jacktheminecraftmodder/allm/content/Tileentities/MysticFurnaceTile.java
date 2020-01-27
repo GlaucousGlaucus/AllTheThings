@@ -1,9 +1,10 @@
 package com.jacktheminecraftmodder.allm.content.Tileentities;
 
 import com.jacktheminecraftmodder.allm.Register;
+import com.jacktheminecraftmodder.allm.base.ModifierItem;
 import com.jacktheminecraftmodder.allm.content.containers.MysticFurnaceContainer;
-import com.jacktheminecraftmodder.allm.recipes.AbstractMysticSmeltingRecipe;
-import com.jacktheminecraftmodder.allm.recipes.MysticFurnaceRecipe;
+import com.jacktheminecraftmodder.allm.recipes.MysticFurnace.AbstractMysticSmeltingRecipe;
+import com.jacktheminecraftmodder.allm.recipes.MysticFurnace.MysticFurnaceRecipe;
 import com.jacktheminecraftmodder.allm.util.ModEnergyStorage;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -14,7 +15,6 @@ import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
@@ -52,15 +52,16 @@ public class MysticFurnaceTile extends TileEntity implements ITickableTileEntity
     public short maxSmeltTime = -1;
     private int lastEnergy = -1;
 
-    public final ItemStackHandler inventory = new ItemStackHandler(4) {
+    public final ItemStackHandler inventory = new ItemStackHandler(3) {
 
-        @Override
+
+       @Override
         public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
             switch (slot) {
-                case MODIFIER_SLOT:
-                    return isModifier(stack);
                 case INPUT_SLOT:
                     return isInput(stack);
+                case MODIFIER_SLOT:
+                    return isModifier(stack) && stack.getItem() instanceof ModifierItem;
                 case OUTPUT_SLOT:
                     return isOutput(stack);
                 default:
@@ -90,20 +91,14 @@ public class MysticFurnaceTile extends TileEntity implements ITickableTileEntity
     private boolean isInput(final ItemStack stack) {
         if (stack.isEmpty())
             return false;
-        return getRecipe(stack).isPresent();
+        return getRecipeForInput(stack).isPresent();
     }
 
     private boolean isModifier(final ItemStack stack) {
         if (stack.isEmpty())
             return false;
-        return getRecipe(stack).isPresent();
+        return getRecipeForModifier(stack).isPresent();
     }
-
-    /*
-    private boolean isModifier(final ItemStack stack) {
-        final Optional<ItemStack> result = getResult(inventory.getStackInSlot(INPUT_SLOT));
-        ret*urn result.isPresent() && ItemStack.areItemsEqual(result.get(), stack);
-    }*/
 
     /**
      * @return If the stack's item is equal to the result of smelting our input
@@ -116,9 +111,15 @@ public class MysticFurnaceTile extends TileEntity implements ITickableTileEntity
     /**
      * @return The smelting recipe for the input stack
      */
-    private Optional<MysticFurnaceRecipe> getRecipe(final ItemStack input) {
-        // Due to vanilla's code we need to pass an IInventory into RecipeManager#getRecipe so we make one here.
+    private Optional<MysticFurnaceRecipe> getRecipeForInput(final ItemStack input) {
         return getRecipe(new Inventory(input));
+    }
+
+    /**
+     * @return The smelting recipe for the modifier stack
+     */
+    private Optional<MysticFurnaceRecipe> getRecipeForModifier(final ItemStack modifier) {
+        return getRecipe(new Inventory(modifier));
     }
 
     /**
@@ -138,9 +139,10 @@ public class MysticFurnaceTile extends TileEntity implements ITickableTileEntity
         if (world == null || world.isRemote)
             return;
         final ItemStack input = inventory.getStackInSlot(INPUT_SLOT);
+        final ItemStack modifier = inventory.getStackInSlot(MODIFIER_SLOT);
         final ItemStack result = getResult(input).orElse(ItemStack.EMPTY);
 
-        if (!result.isEmpty() && isInput(input)) {
+        if (!result.isEmpty() && isInput(input) && isInput(modifier)) {
             final boolean canInsertResultIntoOutput = inventory.insertItem(OUTPUT_SLOT, result, true).isEmpty();
             if (canInsertResultIntoOutput) {
                 // Energy consuming code
@@ -157,14 +159,19 @@ public class MysticFurnaceTile extends TileEntity implements ITickableTileEntity
                         --smeltTimeLeft;
                         if (smeltTimeLeft == 0) {
                             inventory.insertItem(OUTPUT_SLOT, result, false);
-                            if (input.hasContainerItem()) {
-                                final ItemStack containerStack = input.getContainerItem();
+                            if (input.hasContainerItem() && modifier.hasContainerItem()) {
+                                final ItemStack Input = input.getContainerItem();
+                                final ItemStack Modifier = modifier.getContainerItem();
                                 input.shrink(1); // Shrink now to make space in the slot.
-                                insertOrDropStack(INPUT_SLOT, containerStack);
+                                modifier.shrink(1);
+                                insertOrDropStack(INPUT_SLOT, Input);
+                                insertOrDropStack(MODIFIER_SLOT, Modifier);
                             } else {
                                 input.shrink(1);
+                                modifier.shrink(1);
                             }
                             inventory.setStackInSlot(INPUT_SLOT, input); // Update the data
+                            inventory.setStackInSlot(MODIFIER_SLOT, modifier);
                             smeltTimeLeft = -1; // Set to -1 so we smelt the next stack on the next tick
                         }
                     }
@@ -176,19 +183,9 @@ public class MysticFurnaceTile extends TileEntity implements ITickableTileEntity
             smeltTimeLeft = maxSmeltTime = -1;
 
         if (lastEnergy != energy.getEnergyStored()) {
-
-            // "markDirty" tells vanilla that the chunk containing the tile entity has
-            // changed and means the game will save the chunk to disk later.
             this.markDirty();
-
-            // Notify clients of a block update.
-            // This will result in the packet from getUpdatePacket being sent to the client
-            // and our energy being synced.
             final BlockState blockState = this.getBlockState();
-            // Flag 2: Send the change to clients
             world.notifyBlockUpdate(pos, blockState, blockState, 2);
-
-            // Update the last synced energy to the current energy
             lastEnergy = energy.getEnergyStored();
         }
     }
@@ -202,8 +199,8 @@ public class MysticFurnaceTile extends TileEntity implements ITickableTileEntity
     }
 
     private short getSmeltTime(final ItemStack input) {
-        return getRecipe(input)
-                .map(AbstractMysticSmeltingRecipe::getProcessTime)
+        return getRecipeForInput(input)
+                .map(AbstractMysticSmeltingRecipe::getCookTime)
                 .orElse(100)
                 .shortValue();
     }
@@ -293,8 +290,6 @@ public class MysticFurnaceTile extends TileEntity implements ITickableTileEntity
     @Override
     public void remove() {
         super.remove();
-        // We need to invalidate our capability references so that any cached references (by other mods) don't
-        // continue to reference our capabilities and try to use them and/or prevent them from being garbage collected
         inventoryCapabilityExternal.invalidate();
         energyCapabilityExternal.invalidate();
     }

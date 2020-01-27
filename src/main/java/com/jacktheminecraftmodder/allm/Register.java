@@ -1,5 +1,6 @@
 package com.jacktheminecraftmodder.allm;
 
+import com.jacktheminecraftmodder.allm.base.ModifierItem;
 import com.jacktheminecraftmodder.allm.content.Blocks.*;
 import com.jacktheminecraftmodder.allm.content.Enchantments.FlowerPower;
 import com.jacktheminecraftmodder.allm.content.Tileentities.BioGenTileEntity;
@@ -19,6 +20,7 @@ import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraftforge.common.extensions.IForgeContainerType;
 import net.minecraftforge.fml.RegistryObject;
@@ -76,6 +78,10 @@ public class Register {
     //Items
 
     public static final RegistryObject<Item> TEST_ITEM = ITEMS.register("test_item", () -> new Item(new Item.Properties().group(ModSetup.ALL_THE_THINGS)));
+
+    //Modifiers
+
+    public static final RegistryObject<Item> TEST_MODIFIER = ITEMS.register("test_modifier", () -> new ModifierItem("Hello", TextFormatting.AQUA));
 
     //BlockItems
 

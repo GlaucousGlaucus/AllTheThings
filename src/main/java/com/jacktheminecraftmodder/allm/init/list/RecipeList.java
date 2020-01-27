@@ -1,7 +1,6 @@
 package com.jacktheminecraftmodder.allm.init.list;
 
-import com.jacktheminecraftmodder.allm.recipes.MysticFurnaceRecipe;
-import net.minecraft.enchantment.Enchantment;
+import com.jacktheminecraftmodder.allm.recipes.MysticFurnace.MysticFurnaceRecipe;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraftforge.registries.ObjectHolder;
 
