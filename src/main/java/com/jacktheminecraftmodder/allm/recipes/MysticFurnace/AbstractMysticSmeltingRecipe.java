@@ -10,32 +10,33 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
+import java.util.function.BiPredicate;
+
 public abstract class AbstractMysticSmeltingRecipe implements IRecipe<IInventory> {
 
     protected final IRecipeType<?> type;
     protected final ResourceLocation id;
     protected final String group;
     protected final Ingredient ingredient;
-    protected final Ingredient modifier;
     protected final ItemStack result;
     protected final float experience;
     protected final int cookTime;
 
-    public AbstractMysticSmeltingRecipe(IRecipeType<?> typeIn, ResourceLocation idIn, String groupIn, Ingredient ingredientIn, Ingredient modifierIn, ItemStack resultIn, float experienceIn, int cookTimeIn) {
+    public AbstractMysticSmeltingRecipe(IRecipeType<?> typeIn, ResourceLocation idIn, String groupIn, Ingredient ingredientIn,ItemStack resultIn, float experienceIn, int cookTimeIn) {
         this.type = typeIn;
         this.id = idIn;
         this.group = groupIn;
         this.ingredient = ingredientIn;
-        this.modifier = modifierIn;
         this.result = resultIn;
         this.experience = experienceIn;
         this.cookTime = cookTimeIn;
     }
 
     public boolean matches(IInventory inv, World worldIn) {
-        return this.ingredient.test(inv.getStackInSlot(0)) && this.modifier.test(inv.getStackInSlot(2));
+        return this.ingredient.test(inv.getStackInSlot(0));
     }
 
+    @Override
     public ItemStack getCraftingResult(IInventory inv) {
         return this.result.copy();
     }
@@ -47,11 +48,15 @@ public abstract class AbstractMysticSmeltingRecipe implements IRecipe<IInventory
         return true;
     }
 
+    @Override
     public NonNullList<Ingredient> getIngredients() {
         NonNullList<Ingredient> nonnulllist = NonNullList.create();
         nonnulllist.add(this.ingredient);
-        nonnulllist.add(this.modifier);
         return nonnulllist;
+    }
+
+    public Ingredient getMainIngredient() {
+        return ingredient;
     }
 
     /**
@@ -65,6 +70,7 @@ public abstract class AbstractMysticSmeltingRecipe implements IRecipe<IInventory
      * Get the result of this recipe, usually for display purposes (e.g. recipe book). If your recipe has more than one
      * possible result (e.g. it's dynamic and depends on its inputs), then return an empty stack.
      */
+    @Override
     public ItemStack getRecipeOutput() {
         return this.result;
     }
@@ -72,6 +78,7 @@ public abstract class AbstractMysticSmeltingRecipe implements IRecipe<IInventory
     /**
      * Recipes with equal group are combined into one button in the recipe book
      */
+    @Override
     public String getGroup() {
         return this.group;
     }
@@ -83,10 +90,12 @@ public abstract class AbstractMysticSmeltingRecipe implements IRecipe<IInventory
         return this.cookTime;
     }
 
+    @Override
     public ResourceLocation getId() {
         return this.id;
     }
 
+    @Override
     public IRecipeType<?> getType() {
         return this.type;
     }

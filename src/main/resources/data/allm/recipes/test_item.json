@@ -1,12 +1,12 @@
 {
   "type": "allm:mystic_smelting",
-  "ingredient": {
-    "item": "allm:test_block"
+  "main": {
+      "item": "allm:test_block"
   },
   "result": {
     "item": "allm:test_item",
     "count": 1
   },
-  "experience": 0.35,
+  "experience": 1.35,
   "conversionTime": 50
 }

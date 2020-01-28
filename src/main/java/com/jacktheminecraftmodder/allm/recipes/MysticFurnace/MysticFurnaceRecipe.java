@@ -14,18 +14,20 @@ import java.util.function.BiPredicate;
 
 public class MysticFurnaceRecipe extends AbstractMysticSmeltingRecipe {
 
-    public MysticFurnaceRecipe(ResourceLocation idIn, String groupIn, Ingredient ingredientIn, Ingredient modifierIn, ItemStack resultIn, float experienceIn, int cookTimeIn) {
-        super(mystic_smelting, idIn, groupIn, ingredientIn, modifierIn, resultIn, experienceIn, cookTimeIn);
+    public MysticFurnaceRecipe(ResourceLocation idIn, String groupIn, Ingredient ingredientIn, ItemStack resultIn, float experienceIn, int cookTimeIn) {
+        super(mystic_smelting, idIn, groupIn, ingredientIn, resultIn, experienceIn, cookTimeIn);
     }
 
     public static final IRecipeType<MysticFurnaceRecipe> mystic_smelting = IRecipeType.register("mystic_smelting");
 
+    @Override
     public ItemStack getIcon() {
-        return new ItemStack(Blocks.FURNACE);
+        return new ItemStack(Register.MYSTIC_FURNACE.get());
     }
 
+    @Override
     public IRecipeSerializer<?> getSerializer() {
-        return IRecipeSerializer.SMELTING;
+        return IRecipeSerializer.register("mystic_smelting", RecipeList.MYSTIC_SMELTING);
     }
 
 }

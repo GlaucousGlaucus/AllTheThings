@@ -36,8 +36,6 @@ import java.util.List;
 
 public class MysticFurnace extends HorizontalBlock {
 
-    public static final Object2FloatMap<IItemProvider> MODIFIERS = new Object2FloatOpenHashMap<>();
-
     public MysticFurnace() {
         super(Block.Properties.create(Material.IRON).sound(SoundType.ANVIL).hardnessAndResistance(10.0f, 110.0f));
     }

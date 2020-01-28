@@ -11,8 +11,6 @@ import com.jacktheminecraftmodder.allm.content.containers.ElectricAlloyFurnaceCo
 import com.jacktheminecraftmodder.allm.content.containers.MysticFurnaceContainer;
 import com.jacktheminecraftmodder.allm.setup.ModSetup;
 import net.minecraft.block.Block;
-import net.minecraft.block.LeavesBlock;
-import net.minecraft.block.LogBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -21,7 +19,6 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraft.world.gen.feature.Feature;
 import net.minecraftforge.common.extensions.IForgeContainerType;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -64,7 +61,7 @@ public class Register {
     public static final RegistryObject<Block> ELECTRIC_ALLOY_FURNACE = BLOCKS.register("electric_alloy_furnace", () -> new ElectricAlloyFurnace(Block.Properties.create(Material.IRON).hardnessAndResistance(8.0f, 100.0f).lightValue(14)));
     public static final RegistryObject<Block> MYSTIC_FURNACE = BLOCKS.register("mystic_furnace", () -> new MysticFurnace());
     public static final RegistryObject<Block> TEST_BLOCK = BLOCKS.register("test_block", () -> new Block(Block.Properties.create(Material.ROCK)));
-   // public static final RegistryObject<Block> MYSTIC_CRAFTING_TABLE = BLOCKS.register("mystic_crafting", () -> new MysticCraftingTable());
+ //   public static final RegistryObject<Block> MYSTIC_CRAFTING_TABLE = BLOCKS.register("mystic_crafting_table", () -> new MysticCraftingTable());
   //  public static final RegistryObject<Block> MYSTIC_LEAVES = BLOCKS.register("mystic_leaves", () -> new LeavesBlock(Block.Properties.create(Material.LEAVES)));
    // public static final RegistryObject<Block> MYSTIC_LOG = BLOCKS.register("mystic_log", () -> new LogBlock(Block.Properties.create(Material.WOOD)));
    // public static final RegistryObject<Block> MYSTIC_TREE_SAPLING = BLOCKS.register("mystic_tree_sapling", () -> new ModSaplingBlock(MysticalTree.class, Block.Properties.create(Material.ROCK)));
@@ -74,6 +71,7 @@ public class Register {
     public static final RegistryObject<ContainerType<BioGeneratorContainer>> BIO_GENERATOR_CONTAINER = CONTAINER_TYPES.register("bio_generator", () -> IForgeContainerType.create(BioGeneratorContainer::new));
     public static final RegistryObject<ContainerType<ElectricAlloyFurnaceContainer>> ELECTRIC_ALLOY_FURNACE_CONTAINER = CONTAINER_TYPES.register("electric_alloy_furnace", () -> IForgeContainerType.create(ElectricAlloyFurnaceContainer::new));
     public static final RegistryObject<ContainerType<MysticFurnaceContainer>> MYSTIC_FURNACE_CONTAINER = CONTAINER_TYPES.register("mystic_furnace", () -> IForgeContainerType.create(MysticFurnaceContainer::new));
+  //  public static final RegistryObject<ContainerType<MysticCraftingTableContainer>> MYSTIC_CRAFTING_TABLE_CONTAINER = CONTAINER_TYPES.register("mystic_crafting_table", () -> IForgeContainerType.create(MysticCraftingTableContainer::new));
 
     //Items
 
