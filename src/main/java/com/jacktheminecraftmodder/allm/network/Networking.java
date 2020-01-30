@@ -15,7 +15,7 @@ public class Networking {
     }
 
     public static void registerMessages() {
-        INSTANCE = NetworkRegistry.newSimpleChannel(new ResourceLocation(Reference.MOD_ID, "alln"), () -> "1.0", s -> true, s -> true);
+        INSTANCE = NetworkRegistry.newSimpleChannel(new ResourceLocation(Reference.MOD_ID, "allm"), () -> "1.0", s -> true, s -> true);
 
         INSTANCE.registerMessage(nextID(),
                 PacketOpenGui.class,

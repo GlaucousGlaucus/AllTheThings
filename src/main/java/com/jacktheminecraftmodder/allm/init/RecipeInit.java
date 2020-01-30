@@ -12,22 +12,19 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 public class RecipeInit {
+
     @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
     public static class RegistryEvents {
         @SubscribeEvent
         public static void onRecipeRegistry(final RegistryEvent.Register<IRecipeSerializer<?>> event) {
 
+            AllModMain.LOGGER.debug("Registries.Recipes () -> stats () -> Registering");
+
             event.getRegistry().registerAll(
                     RecipeList.MYSTIC_SMELTING = new MysticSmeltingRecipeSerializer<>(MysticFurnaceRecipe::new, 50)
             );
 
-            AllModMain.LOGGER.info("Recipe init -- Recipes Registered!");
+            AllModMain.LOGGER.info("Recipe init :: Recipes Registered!");
         }
     }
-
-    private static ResourceLocation location(String name)
-    {
-        return new ResourceLocation(Reference.MOD_ID, name);
-    }
-
 }

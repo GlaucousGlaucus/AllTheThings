@@ -1,7 +1,7 @@
 package com.jacktheminecraftmodder.allm.content.Enchantments;
 
 import com.jacktheminecraftmodder.allm.Reference;
-import com.jacktheminecraftmodder.allm.init.list.EnchantmentList;
+import com.jacktheminecraftmodder.allm.Register;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FlowingFluidBlock;
@@ -53,7 +53,7 @@ public class DeathWalkerEnchantment extends Enchantment {
     public static void FreezeLava(PlayerEntity playerEntity, BlockPos pos) {
        // PlayerEntity playerEntity = tickEvent.player;
         World worldIn = playerEntity.world;
-        int level = EnchantmentHelper.getMaxEnchantmentLevel(EnchantmentList.death_walker, playerEntity);
+        int level = EnchantmentHelper.getMaxEnchantmentLevel(Register.DEATH_WALKER.get(), playerEntity);
             if (playerEntity.onGround) {
                 BlockState blockstate = Blocks.MAGMA_BLOCK.getDefaultState();
                 float f = (float) Math.min(16, 2 + level);
@@ -78,7 +78,7 @@ public class DeathWalkerEnchantment extends Enchantment {
     @SubscribeEvent
     public static void LavaWalk(TickEvent.PlayerTickEvent tickEvent) {
         PlayerEntity playerEntity = tickEvent.player;
-        int i = EnchantmentHelper.getMaxEnchantmentLevel(EnchantmentList.death_walker, playerEntity);
+        int i = EnchantmentHelper.getMaxEnchantmentLevel(Register.DEATH_WALKER.get(), playerEntity);
         if (i > 0) {
             FreezeLava(playerEntity, playerEntity.getPosition());
         }

@@ -1,13 +1,8 @@
 package com.jacktheminecraftmodder.allm.content.Potions;
 
-import com.jacktheminecraftmodder.allm.init.list.EffectList;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.IAttribute;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectType;
-import net.minecraft.potion.Potion;
 
 public class ParalysedEffect extends Effect {
 
