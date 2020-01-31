@@ -3,6 +3,9 @@
   "main": {
       "item": "allm:test_block"
   },
+  "modifier": {
+    "item": "allm:test_modifier"
+  },
   "result": {
     "item": "allm:test_item",
     "count": 1

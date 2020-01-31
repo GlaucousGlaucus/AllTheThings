@@ -31,6 +31,11 @@ public class MysticSmeltingRecipeSerializer<T extends AbstractMysticSmeltingReci
                 JSONUtils.getJsonObject(json, "main"));
         Ingredient mainI = Ingredient.deserialize(main);
 
+        JsonElement modifier = (JsonElement)(JSONUtils.isJsonArray(json, "modifier") ?
+                JSONUtils.getJsonArray(json, "modifier") :
+                JSONUtils.getJsonObject(json, "modifier"));
+        Ingredient Modifier = Ingredient.deserialize(modifier);
+
         //Forge: Check if primitive string to keep vanilla or a object which can contain a count field.
         if (!json.has("result")) throw new com.google.gson.JsonSyntaxException("Missing result, expected to find a string or object");
 
@@ -43,29 +48,31 @@ public class MysticSmeltingRecipeSerializer<T extends AbstractMysticSmeltingReci
         //get the process time
         int i = JSONUtils.getInt(json, "conversionTime", this.conversionTime);
 
-        return this.factory.create(recipeId, s, mainI, itemstack, f, i);
+        return this.factory.create(recipeId, s, mainI, Modifier, itemstack, f, i);
     }
     @Override
     public T read(ResourceLocation recipeId, PacketBuffer buffer) {
 
         String s = buffer.readString(32767);
         Ingredient main = Ingredient.read(buffer);
+        Ingredient modifier = Ingredient.read(buffer);
         ItemStack itemstack = buffer.readItemStack();
         float f = buffer.readFloat();
         int i = buffer.readVarInt();
 
-        return this.factory.create(recipeId, s, main, itemstack, f, i);
+        return this.factory.create(recipeId, s, main, modifier, itemstack, f, i);
     }
     @Override
     public void write(PacketBuffer buffer, T recipe) {
 
         buffer.writeString(recipe.group);
         recipe.ingredient.write(buffer);
+        recipe.modifier.write(buffer);
         buffer.writeItemStack(recipe.result);
         buffer.writeFloat(recipe.experience);
         buffer.writeVarInt(recipe.cookTime);
     }
     public interface IFactory<T extends AbstractMysticSmeltingRecipe> {
-        T create(ResourceLocation resourceLocation, String s, Ingredient ingredient, ItemStack itemStack, float experienceIn, int processTimeIn);
+        T create(ResourceLocation resourceLocation, String s, Ingredient ingredient, Ingredient modifier, ItemStack itemStack, float experienceIn, int processTimeIn);
     }
 }
