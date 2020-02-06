@@ -1,16 +1,21 @@
 package com.jacktheminecraftmodder.allm.recipes.MysticFurnace;
 
-import com.jacktheminecraftmodder.allm.base.RecipeBase;
-import com.mojang.brigadier.CommandDispatcher;
+import com.google.common.collect.ImmutableMap;
+import com.jacktheminecraftmodder.allm.Reference;
+import com.jacktheminecraftmodder.allm.util.Utility;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import net.minecraft.item.crafting.*;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.function.BiPredicate;
 
 public abstract class AbstractMysticSmeltingRecipe implements IRecipe<IInventory>, BiPredicate<ItemStack, ItemStack> {
@@ -91,5 +96,6 @@ public abstract class AbstractMysticSmeltingRecipe implements IRecipe<IInventory
     public IRecipeType<?> getType() {
         return this.type;
     }
+
 
 }

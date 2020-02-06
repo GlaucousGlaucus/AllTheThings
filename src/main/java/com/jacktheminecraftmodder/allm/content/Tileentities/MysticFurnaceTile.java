@@ -55,7 +55,7 @@ public class MysticFurnaceTile extends TileEntity implements ITickableTileEntity
     public final ItemStackHandler inventory = new ItemStackHandler(3) {
 
 
-       @Override
+        @Override
         public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
             switch (slot) {
                 case INPUT_SLOT:
@@ -305,5 +305,6 @@ public class MysticFurnaceTile extends TileEntity implements ITickableTileEntity
     public Container createMenu(final int windowId, final PlayerInventory inventory, final PlayerEntity player) {
         return new MysticFurnaceContainer(windowId, inventory, this);
     }
+
 
 }

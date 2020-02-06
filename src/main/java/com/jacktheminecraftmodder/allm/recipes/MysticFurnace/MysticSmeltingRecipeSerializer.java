@@ -10,8 +10,10 @@ import net.minecraft.item.crafting.ShapedRecipe;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.registries.ForgeRegistryEntry;
 
-public class MysticSmeltingRecipeSerializer<T extends AbstractMysticSmeltingRecipe> extends net.minecraftforge.registries.ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<T> {
+public class MysticSmeltingRecipeSerializer<T extends AbstractMysticSmeltingRecipe> extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<T> {
+
     private final int conversionTime;
     private final MysticSmeltingRecipeSerializer.IFactory<T> factory;
     public MysticSmeltingRecipeSerializer(MysticSmeltingRecipeSerializer.IFactory<T> factoryIn, int processTimeIn) {
@@ -75,4 +77,5 @@ public class MysticSmeltingRecipeSerializer<T extends AbstractMysticSmeltingReci
     public interface IFactory<T extends AbstractMysticSmeltingRecipe> {
         T create(ResourceLocation resourceLocation, String s, Ingredient ingredient, Ingredient modifier, ItemStack itemStack, float experienceIn, int processTimeIn);
     }
+
 }

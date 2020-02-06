@@ -15,8 +15,10 @@ import com.jacktheminecraftmodder.allm.fluids.MysticWater;
 import com.jacktheminecraftmodder.allm.recipes.MysticFurnace.MysticFurnaceRecipe;
 import com.jacktheminecraftmodder.allm.recipes.MysticFurnace.MysticSmeltingRecipeSerializer;
 import com.jacktheminecraftmodder.allm.setup.ModSetup;
+import com.jacktheminecraftmodder.allm.world.biomes.EnchantedEarth;
 import net.minecraft.block.Block;
 import net.minecraft.block.FlowingFluidBlock;
+import net.minecraft.block.OreBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.fluid.FlowingFluid;
@@ -34,6 +36,7 @@ import net.minecraft.potion.EffectType;
 import net.minecraft.potion.Potion;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.extensions.IForgeContainerType;
 import net.minecraftforge.fluids.ForgeFlowingFluid;
 import net.minecraftforge.fml.RegistryObject;
@@ -51,6 +54,7 @@ public class Register {
  //   public static final DeferredRegister<Feature<?>> FEATURE = new DeferredRegister<>(ForgeRegistries.FEATURES, Reference.MOD_ID);
     public static final DeferredRegister<Potion> POTION = new DeferredRegister<>(ForgeRegistries.POTION_TYPES, Reference.MOD_ID);
     public static final DeferredRegister<Effect> EFFECTS = new DeferredRegister<>(ForgeRegistries.POTIONS, Reference.MOD_ID);
+    public static final DeferredRegister<Biome> BIOMES = new DeferredRegister<>(ForgeRegistries.BIOMES, Reference.MOD_ID);
 
     public static void init() {
         BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
@@ -61,10 +65,15 @@ public class Register {
         POTION.register(FMLJavaModLoadingContext.get().getModEventBus());
         EFFECTS.register(FMLJavaModLoadingContext.get().getModEventBus());
         FLUIDS.register(FMLJavaModLoadingContext.get().getModEventBus());
+        BIOMES.register(FMLJavaModLoadingContext.get().getModEventBus());
       //  FEATURE.register(FMLJavaModLoadingContext.get().getModEventBus());
      //   ENTITIES.register(FMLJavaModLoadingContext.get().getModEventBus());
       //  DIMENSIONS.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
+
+    //Biomes
+
+    public static final RegistryObject<Biome> ENCHANTED_EARTH_BIOME = BIOMES.register("enchanted_earth_biome", () -> new EnchantedEarth());
 
     //Fluids
 
@@ -88,6 +97,7 @@ public class Register {
     public static final RegistryObject<Block> MYSTIC_FURNACE = BLOCKS.register("mystic_furnace", () -> new MysticFurnace());
     public static final RegistryObject<Block> TEST_BLOCK = BLOCKS.register("test_block", () -> new Block(Block.Properties.create(Material.ROCK)));
     public static final RegistryObject<FlowingFluidBlock> MYSTIC_WATER_BLOCK = BLOCKS.register("mystic_water", () -> new FlowingFluidBlock(() ->  MYSTIC_WATER.get(), Block.Properties.create(Material.WATER).doesNotBlockMovement().hardnessAndResistance(100.0F).noDrops()));
+    public static final RegistryObject<Block> DRIED_LUCK_ORE = BLOCKS.register("dried_luck_ore", () -> new Block(Block.Properties.create(Material.ROCK).hardnessAndResistance(10.0F, 100.0F)));
  //   public static final RegistryObject<Block> MYSTIC_CRAFTING_TABLE = BLOCKS.register("mystic_crafting_table", () -> new MysticCraftingTable());
   //  public static final RegistryObject<Block> MYSTIC_LEAVES = BLOCKS.register("mystic_leaves", () -> new LeavesBlock(Block.Properties.create(Material.LEAVES)));
    // public static final RegistryObject<Block> MYSTIC_LOG = BLOCKS.register("mystic_log", () -> new LogBlock(Block.Properties.create(Material.WOOD)));
@@ -107,7 +117,7 @@ public class Register {
 
     //Modifiers
 
-    public static final RegistryObject<Item> TEST_MODIFIER = ITEMS.register("test_modifier", () -> new ModifierItem("Hello", TextFormatting.AQUA));
+    public static final RegistryObject<Item> TEST_MODIFIER = ITEMS.register("test_modifier", () -> new ModifierItem(200,"Hello", TextFormatting.AQUA));
 
     //BlockItems
 
@@ -115,6 +125,7 @@ public class Register {
     public static final RegistryObject<Item> ELECTRIC_ALLOY_FURNACE_ITEM = ITEMS.register("electric_alloy_furnace", () -> new BlockItem(ELECTRIC_ALLOY_FURNACE.get(), new Item.Properties().group(ModSetup.ALL_THE_THINGS)));
     public static final RegistryObject<Item> MYSTIC_FURNACE_ITEM = ITEMS.register("mystic_furnace", () -> new BlockItem(MYSTIC_FURNACE.get(), new Item.Properties().group(ModSetup.ALL_THE_THINGS)));
     public static final RegistryObject<Item> TEST_BLOCK_ITEM = ITEMS.register("test_block", () -> new BlockItem(TEST_BLOCK.get(), new Item.Properties().group(ModSetup.ALL_THE_THINGS)));
+    public static final RegistryObject<Item> DRIED_LUCK_ORE_ITEM = ITEMS.register("dried_luck_ore", () -> new BlockItem(DRIED_LUCK_ORE.get(), new Item.Properties().group(ModSetup.ALL_THE_THINGS)));
 
     //TE Types
 

@@ -3,10 +3,13 @@ package com.jacktheminecraftmodder.allm.init;
 import com.jacktheminecraftmodder.allm.AllModMain;
 import com.jacktheminecraftmodder.allm.Reference;
 import com.jacktheminecraftmodder.allm.init.list.RecipeList;
+import com.jacktheminecraftmodder.allm.recipes.MysticFurnace.AbstractMysticSmeltingRecipe;
 import com.jacktheminecraftmodder.allm.recipes.MysticFurnace.MysticFurnaceRecipe;
 import com.jacktheminecraftmodder.allm.recipes.MysticFurnace.MysticSmeltingRecipeSerializer;
 import net.minecraft.item.crafting.IRecipeSerializer;
+import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.registry.Registry;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -27,4 +30,5 @@ public class RecipeInit {
             AllModMain.LOGGER.info("Recipe init :: Recipes Registered!");
         }
     }
+
 }
