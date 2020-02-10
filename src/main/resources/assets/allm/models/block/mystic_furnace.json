@@ -1,0 +1,9 @@
+{
+  "parent": "block/orientable",
+  "textures": {
+    "front": "allm:block/mystic_furnace_front",
+    "side": "block/black_concrete",
+    "top": "block/black_concrete",
+    "bottom": "block/black_concrete"
+  }
+}
