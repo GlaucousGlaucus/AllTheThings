@@ -1,8 +1,0 @@
-{
-	"variants": {
-		"facing=north": { "model": "allm:block/mystic_furnace" },
-		"facing=south": { "model": "allm:block/mystic_furnace", "y": 180 },
-		"facing=west":  { "model": "allm:block/mystic_furnace", "y": 270 },
-		"facing=east":  { "model": "allm:block/mystic_furnace", "y": 90 }
-	}
-}
