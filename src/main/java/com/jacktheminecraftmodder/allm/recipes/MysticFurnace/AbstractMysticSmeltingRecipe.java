@@ -18,7 +18,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.BiPredicate;
 
-public abstract class AbstractMysticSmeltingRecipe implements IRecipe<IInventory>, BiPredicate<ItemStack, ItemStack> {
+public abstract class AbstractMysticSmeltingRecipe implements IRecipe<IInventory> {
 
     protected final IRecipeType<?> type;
     protected final ResourceLocation id;
@@ -40,13 +40,11 @@ public abstract class AbstractMysticSmeltingRecipe implements IRecipe<IInventory
         this.cookTime = cookTimeIn;
     }
 
-    @Override
-    public boolean test(ItemStack stack, ItemStack stack2) {
-        return ingredient.test(stack) && modifier.test(stack2);
-    }
-
     public boolean matches(IInventory inv, World worldIn) {
-        return true;
+        /*
+        return ingredient.test(inv.getStackInSlot(0))
+        return modifier.test(inv.getStackInSlot(0))
+        */
     }
 
     @Override
