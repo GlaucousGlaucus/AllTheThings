@@ -1,0 +1,7 @@
+{
+	"variants": {
+		"": {
+			"model": "allm:block/bio_generator"
+		}
+	}
+}

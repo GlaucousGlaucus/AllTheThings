@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "allm:test_block"
+    ]
+  },
+  "criteria": {
+    "test_item": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "allm:test_item"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "allm:test_block"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "test_item",
+      "has_the_recipe"
+    ]
+  ]
+}

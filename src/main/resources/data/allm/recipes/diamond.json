@@ -1,0 +1,14 @@
+{
+  "type": "allm:mystic_smelting",
+  "main": {
+    "item": "allm:test_item"
+  },
+  "modifier": {
+    "item": "allm:test_modifier"
+  },
+  "result": {
+    "item": "minecraft:diamond"
+  },
+  "experience": 1.35,
+  "conversionTime": 50
+}
