@@ -1,8 +1,0 @@
-{
-  "parent": "block/orientable",
-  "textures": {
-    "top": "block/magma",
-    "side": "allm:block/bio_generator",
-    "front": "block/black_concrete"
-  }
-}
