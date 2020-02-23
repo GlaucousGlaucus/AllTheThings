@@ -6,7 +6,10 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FlowingFluidBlock;
 import net.minecraft.block.material.Material;
-import net.minecraft.enchantment.*;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.EnchantmentType;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.util.math.BlockPos;
@@ -47,9 +50,6 @@ public class DeathWalkerEnchantment extends Enchantment {
         return super.canApplyTogether(ench) && ench != Enchantments.FROST_WALKER;
     }
 
-    //TODO : Make this work
-
-
     public static void FreezeLava(PlayerEntity playerEntity, BlockPos pos) {
        // PlayerEntity playerEntity = tickEvent.player;
         World worldIn = playerEntity.world;
@@ -58,13 +58,13 @@ public class DeathWalkerEnchantment extends Enchantment {
                 BlockState blockstate = Blocks.MAGMA_BLOCK.getDefaultState();
                 float f = (float) Math.min(16, 2 + level);
                 BlockPos.Mutable blockpos$mutable = new BlockPos.Mutable();
-                for (BlockPos blockpos : BlockPos.getAllInBoxMutable(pos.add((double) (-f), -1.0D, (double) (-f)), pos.add((double) f, -1.0D, (double) f))) {
-                    if (blockpos.withinDistance(playerEntity.getPositionVec(), (double) f)) {
+                for (BlockPos blockpos : BlockPos.getAllInBoxMutable(pos.add(-f, -1.0D, -f), pos.add(f, -1.0D, f))) {
+                    if (blockpos.withinDistance(playerEntity.getPositionVec(), f)) {
                         blockpos$mutable.setPos(blockpos.getX(), blockpos.getY() + 1, blockpos.getZ());
                         BlockState blockstate1 = worldIn.getBlockState(blockpos$mutable);
                         if (blockstate1.isAir(worldIn, blockpos$mutable)) {
                             BlockState blockstate2 = worldIn.getBlockState(blockpos);
-                            boolean isFull = blockstate2.getBlock() == Blocks.LAVA && blockstate2.get(FlowingFluidBlock.LEVEL) == 0; //TODO: Forge, modded waters?
+                            boolean isFull = blockstate2.getBlock() == Blocks.LAVA && blockstate2.get(FlowingFluidBlock.LEVEL) == 0;
                             if (blockstate2.getMaterial() == Material.LAVA && isFull && blockstate.isValidPosition(worldIn, blockpos) && worldIn.func_226663_a_(blockstate, blockpos, ISelectionContext.dummy()) && !net.minecraftforge.event.ForgeEventFactory.onBlockPlace(playerEntity, new net.minecraftforge.common.util.BlockSnapshot(worldIn, blockpos, blockstate2), net.minecraft.util.Direction.UP)) {
                                 worldIn.setBlockState(blockpos, blockstate);
                                 //  worldIn.getPendingBlockTicks().scheduleTick(blockpos, Blocks.FROSTED_ICE, MathHelper.nextInt(living.getRNG(), 60, 120));

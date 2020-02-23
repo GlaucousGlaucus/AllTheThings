@@ -7,7 +7,12 @@
   "item.allm.test_item": "Test Item",
   "item.allm.mystic_water_bucket": "Mystic Water Bucket",
 
+  "item.allm.fortune_stone": "Fortune Stone",
+  "item.allm.weird_stone": "Weird Stone",
+
   "itemGroup.all_the_things": "All the things",
+
+  "key.armor_effects": "Armor Effects",
 
   "enchantment.allm.death_walker": "Death Walker",
   "enchantment.allm.flower_power": "Flower Power",

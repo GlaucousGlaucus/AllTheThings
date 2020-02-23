@@ -1,7 +1,7 @@
 package com.jacktheminecraftmodder.allm.datagen;
 
 import com.jacktheminecraftmodder.allm.Register;
-import com.jacktheminecraftmodder.allm.base.BaseLootTableProvider;
+import com.jacktheminecraftmodder.allm.base.datagen.BaseLootTableProvider;
 import net.minecraft.data.DataGenerator;
 
 public class LootTables extends BaseLootTableProvider {

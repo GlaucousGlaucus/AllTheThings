@@ -1,14 +1,9 @@
 {
   "type": "allm:mystic_smelting",
-  "main": {
+  "ingredient": {
     "item": "allm:test_block"
   },
-  "modifier": {
-    "item": "minecraft:diamond"
-  },
-  "result": {
-    "item": "allm:test_item"
-  },
-  "experience": 1.35,
-  "conversionTime": 50
+  "result": "allm:test_item",
+  "xp": 0.35,
+  "cookingtime": 50
 }

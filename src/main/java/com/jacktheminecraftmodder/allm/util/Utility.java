@@ -12,7 +12,6 @@ public class Utility {
     /**
      * Cache all the directions instead of calling Direction.values()
      * each time (because each call creates a new Direction[] which is wasteful)
-     * TODO: change to Direction.VALUES once it's ATed
      */
     public static final Direction[] DIRECTIONS = Direction.values();
 

@@ -1,14 +1,8 @@
 package com.jacktheminecraftmodder.allm.world.biomes;
 
-import com.jacktheminecraftmodder.allm.Register;
 import net.minecraft.block.Blocks;
-import net.minecraft.entity.EntityClassification;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.DefaultBiomeFeatures;
-import net.minecraft.world.gen.GenerationStage.Decoration;
-import net.minecraft.world.gen.feature.IFeatureConfig;
-import net.minecraft.world.gen.placement.AtSurfaceWithExtraConfig;
-import net.minecraft.world.gen.placement.Placement;
 import net.minecraft.world.gen.surfacebuilders.ConfiguredSurfaceBuilder;
 import net.minecraft.world.gen.surfacebuilders.SurfaceBuilder;
 import net.minecraft.world.gen.surfacebuilders.SurfaceBuilderConfig;
@@ -16,7 +10,7 @@ import net.minecraft.world.gen.surfacebuilders.SurfaceBuilderConfig;
 public class EnchantedEarth extends Biome {
 
     public EnchantedEarth() {
-        super(new Biome.Builder()
+        super(new Builder()
                 .surfaceBuilder(new ConfiguredSurfaceBuilder<SurfaceBuilderConfig>(SurfaceBuilder.DEFAULT,
                         new SurfaceBuilderConfig(Blocks.DIAMOND_BLOCK.getDefaultState(),
                                 Blocks.MAGMA_BLOCK.getDefaultState(),

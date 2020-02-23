@@ -2,7 +2,7 @@ package com.jacktheminecraftmodder.allm.content.Tileentities;
 
 import com.jacktheminecraftmodder.allm.Register;
 import com.jacktheminecraftmodder.allm.content.containers.MysticFurnaceContainer;
-import com.jacktheminecraftmodder.allm.recipes.MysticFurnace.NewMysticSmeltingRecipe;
+import com.jacktheminecraftmodder.allm.recipes.MysticFurnaceRecipe;
 import com.jacktheminecraftmodder.allm.util.ModEnergyStorage;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -37,8 +37,8 @@ import java.util.Optional;
 public class MysticFurnaceTile extends TileEntity implements ITickableTileEntity, INamedContainerProvider {
 
     public static final int INPUT_SLOT = 0;
-    public static final int OUTPUT_SLOT = 1;
-    public static final int MODIFIER_SLOT = 2;
+    public static final int MODIFIER_SLOT = 1;
+    public static final int OUTPUT_SLOT = 2;
 
     private static final String INVENTORY_TAG = "inventory";
     private static final String SMELT_TIME_LEFT_TAG = "smeltTimeLeft";
@@ -92,22 +92,22 @@ public class MysticFurnaceTile extends TileEntity implements ITickableTileEntity
     /**
      * @return The smelting recipe for the input stack
      */
-    private Optional<NewMysticSmeltingRecipe> getRecipeForInput(final ItemStack input) {
+    private Optional<MysticFurnaceRecipe> getRecipeForInput(final ItemStack input) {
         return getRecipe(new Inventory(input));
     }
 
     /**
      * @return The smelting recipe for the modifier stack
      */
-    private Optional<NewMysticSmeltingRecipe> getRecipeForModifier(final ItemStack modifier) {
+    private Optional<MysticFurnaceRecipe> getRecipeForModifier(final ItemStack modifier) {
         return getRecipe(new Inventory(modifier));
     }
 
     /**
      * @return The smelting recipe for the inventory
      */
-    private Optional<NewMysticSmeltingRecipe> getRecipe(final IInventory inventory) {
-        return world.getRecipeManager().getRecipe(NewMysticSmeltingRecipe.MYSTIC_SMELTING , inventory, world);
+    private Optional<MysticFurnaceRecipe> getRecipe(final IInventory inventory) {
+        return world.getRecipeManager().getRecipe(MysticFurnaceRecipe.RECIPE_TYPE , inventory, world);
     }
 
     private Optional<ItemStack> getResult(final ItemStack input) {
@@ -123,7 +123,7 @@ public class MysticFurnaceTile extends TileEntity implements ITickableTileEntity
         final ItemStack modifier = inventory.getStackInSlot(MODIFIER_SLOT);
         final ItemStack result = getResult(input).orElse(ItemStack.EMPTY);
 
-        if (!result.isEmpty() && isInput(input)  && isModifier(input)) {
+        if (!result.isEmpty() && isInput(input)) {
             final boolean canInsertResultIntoOutput = inventory.insertItem(OUTPUT_SLOT, result, true).isEmpty();
             if (canInsertResultIntoOutput) {
                 // Energy consuming code
@@ -140,7 +140,7 @@ public class MysticFurnaceTile extends TileEntity implements ITickableTileEntity
                         --smeltTimeLeft;
                         if (smeltTimeLeft == 0) {
                             inventory.insertItem(OUTPUT_SLOT, result, false);
-                            if (input.hasContainerItem() && modifier.hasContainerItem()) {
+                            if (input.hasContainerItem()) {
                                 final ItemStack Input = input.getContainerItem();
                                 final ItemStack Modifier = modifier.getContainerItem();
                                 input.shrink(1); // Shrink now to make space in the slot.
@@ -181,7 +181,7 @@ public class MysticFurnaceTile extends TileEntity implements ITickableTileEntity
 
     private short getSmeltTime(final ItemStack input) {
         return getRecipeForInput(input)
-                .map(NewMysticSmeltingRecipe::getResultTime)
+                .map(MysticFurnaceRecipe::getCookTime)
                 .orElse(100)
                 .shortValue();
     }

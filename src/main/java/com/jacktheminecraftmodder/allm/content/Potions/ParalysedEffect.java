@@ -1,9 +1,6 @@
 package com.jacktheminecraftmodder.allm.content.Potions;
 
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.IAttribute;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectType;
 
@@ -13,13 +10,7 @@ public class ParalysedEffect extends Effect {
         super(typeIn, liquidColorIn);
     }
 
-    @Override
-    public void performEffect(LivingEntity entityLivingBaseIn, int amplifier) {
-    }
+    public void Paralyse(LivingEntity entity) {
 
-
-    @Override
-    public boolean isReady(int duration, int amplifier) {
-        return super.isReady(duration, amplifier);
     }
 }
